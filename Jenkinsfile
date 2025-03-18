@@ -35,8 +35,8 @@ pipeline {
                 echo'Docker Image Build'
                 dir("${env.WORKSPACE}")
                     sh'''
-                        docker build -t spring-petclinic:1.0 .
-                        docker tag spring-petclinic:1.0 AS-SNIPER/spring-petclinic:latest
+                        docker build -t spring-petclinic:$BUILD_NUMBER .
+                        docker tag spring-petclinic:$BUILD_NUMBER AS-SNIPER/spring-petclinic:$BUILD_NUMBER
                         '''
             }
               }
