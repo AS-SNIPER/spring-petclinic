@@ -10,7 +10,7 @@ pipeline {
         stage('Git Clone') {
             steps {
                 echo 'Git Clone'
-                git url: 'https://github.com/KimJunSeop99/spring-petclinic.git',
+                git url: 'https://github.com/AS-SNIPER/spring-petclinic.git',
                 branch:'main'
             }
             post {
@@ -28,6 +28,20 @@ pipeline {
                 sh 'mvn -Dmaven.test.failure.ignore=true clean package'
             }
         }
+
+        //DOCKER image 생성 
+        stage('Docker Image Build'){
+            steps {
+                echo'Docker Image Build'
+                dir("${env.WORKSPACE}")
+                    sh'''
+                        docker build -t spring-petclinic:1.0 .
+                        docker tag spring-petclinic:1.0 AS-SNIPER/spring-petclinic:latest
+                        '''
+            }
+              }
+
+        
         stage('SSH Publish') {
             steps {
                 echo 'SSH Publish'
