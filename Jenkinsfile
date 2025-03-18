@@ -55,13 +55,14 @@ pipeline {
             }
         }
 
-        stage('Remove Docker Images')
+        stage('Remove Docker Images'){
             steps {
                 sh '''
                 docker rmi spring-petclinic:$BUILD_NUMBER
                 docker rmi ms13200/spring-petclinic:latest
                 '''
             }
+        }
         
        stage('SSH Publish') {
             steps {
