@@ -39,7 +39,7 @@ pipeline {
                 dir("${env.WORKSPACE}") {
                     sh '''
                         docker build -t spring-petclinic:$BUILD_NUMBER .
-                        docker tag spring-petclinic:$BUILD_NUMBER kimjunseop/spring-petclinic:latest
+                        docker tag spring-petclinic:$BUILD_NUMBER as-sniper/spring-petclinic:latest
                         '''
                 }
             }
