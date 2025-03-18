@@ -39,7 +39,7 @@ pipeline {
                 dir("${env.WORKSPACE}") {
                     sh '''
                         docker build -t spring-petclinic:$BUILD_NUMBER .
-                        docker tag spring-petclinic:$BUILD_NUMBER as-sniper/spring-petclinic:latest
+                        docker tag spring-petclinic:$BUILD_NUMBER ms13200/spring-petclinic:latest
                         '''
                 }
             }
@@ -50,7 +50,7 @@ pipeline {
             steps {
                 sh '''
                     echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                    docker push as-sniper/spring-petclinic:latest
+                    docker push ms13200/spring-petclinic:latest
                     '''
             }
         }
