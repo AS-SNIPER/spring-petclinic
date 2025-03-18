@@ -6,7 +6,7 @@ pipeline {
         jdk "JDK17"
     }
     environment {
-        // Remove this line, as we can't use credential() in environment
+        DOCKERHUB_CRDENTIALS = credential('dockerCredential')
     }
 
     stages {
@@ -45,18 +45,13 @@ pipeline {
             }
         }
 
-        // Docker images Push
-        stage('Docker image Push') {
-            steps {
-                script {
-                    // Use withCredentials here to securely bind Docker credentials
-                    withCredentials([usernamePassword(credentialsId: 'dockerCredential', usernameVariable: 'DOCKERHUB_CRDENTIALS_USR', passwordVariable: 'DOCKERHUB_CRDENTIALS_PSW')]) {
-                        sh '''
-                            echo $DOCKERHUB_CRDENTIALS_PSW | docker login -u $DOCKERHUB_CRDENTIALS_USR --password-stdin
-                            docker push ms13200/spring-petclinic:latest
-                        '''
-                    }
-                }
+        //Docker images Push
+        stage('Docker image Push'){
+            steps{
+                sh'''
+                echo $DOCKERHUB_CRDENTIALS_PSW | docker login -u $DOCKERHUB_CRDENTIALS_USR -password-stdin
+                docker push ms13200/spring-petclinic:latest
+                '''
             }
         }
 
@@ -96,3 +91,4 @@ pipeline {
         }
     }
 }
+
