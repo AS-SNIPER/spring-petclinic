@@ -55,15 +55,15 @@ pipeline {
             }
         }
         
-        stage('SSH Publish') {
+       stage('SSH Publish') {
             steps {
                 echo 'SSH Publish'
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'target',
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'target', 
                 transfers: [sshTransfer(cleanRemote: false, excludes: '', 
                 execCommand: '''
-                docker rm -f $(docker ps -aq)
-                docker rmi $(docker images -q)
-                dokcer run -d -p 8080:8080 --name spring-petclinic ms13200/spring-petclinic:latest
+                docker rm -f $(docker ps -aq) 
+                docker rmi $docker images -q)
+                docker run -d -p 8080:8080 --name spring-petclinic ms13200/spring-petclinic:latest
                 ''',
                 execTimeout: 120000, 
                 flatten: false, 
@@ -72,9 +72,9 @@ pipeline {
                 patternSeparator: '[, ]+', 
                 remoteDirectory: '', 
                 remoteDirectorySDF: false, 
-                removePrefix: 'target',
+                removePrefix: 'target', 
                 sourceFiles: 'target/*.jar')], 
-                usePromotionTimestamp: false,
+                usePromotionTimestamp: false, 
                 useWorkspaceInPromotion: false, verbose: false)])
             }
         }
